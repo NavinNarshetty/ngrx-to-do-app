@@ -56,13 +56,16 @@ export function ShoppingListRecuder(state=InitialState,action:ShoppingListAction
         editItem:{...state.listItems[action.payload]}
       }
     default:
-    case ShoppingListAction.STOP_EDIT:
+    case ShoppingListAction.DELETE_ITEM:
+      const filterItems = state.listItems.filter((item,itemindex)=>{
+        return itemindex != state.editIndex
+      })
       return{
         ...state,
+        listItems:filterItems,
         editIndex:-1,
         editItem:null
       }
-      break;
       return state;
       break;
   }

@@ -34,23 +34,17 @@ export class StartEdit implements Action {
   }
 }
 
-export class StopEdit implements Action {
-  readonly type =STOP_EDIT;
+
+export class DeleteItem implements Action {
+  readonly type =DELETE_ITEM
   constructor() {
 
   }
 }
 
-export class DeleteItem implements Action {
-  readonly type =DELETE_ITEM
-  constructor(public payload:number) {
-
-  }
-}
 
 
 
 
 
-
-export type ShoppingListActions = AddItem | UpdateItem | StartEdit | StopEdit | DeleteItem
+export type ShoppingListActions = AddItem | UpdateItem | StartEdit  | DeleteItem

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ShoppingListService } from '../shopping-list.service';
 import { ShoppingListItem } from '../shopping-list.module';
 import { Subscription } from 'rxjs';
 import * as appReducerState from '../../store/app.reducer'
@@ -22,7 +21,7 @@ export class ShoppingListEditComponent implements OnInit , OnDestroy {
  firstSubscription:Subscription;
 
 
-  constructor(private _shoppinglistservice:ShoppingListService, private _store:Store<appReducerState.AppState>) { }
+  constructor(private _store:Store<appReducerState.AppState>) { }
 
   ngOnInit() {
   this.firstSubscription=this._store.select('shoppingList').subscribe((stateData)=>{
@@ -38,14 +37,12 @@ export class ShoppingListEditComponent implements OnInit , OnDestroy {
 
       }else{
         //do somthing
-        this.editMode= false
-        // this._store.dispatch(new fromShoppingListActions.StopEdit())
+        this.editMode= false;
       }
     })
   }
 
   onSubmit(itemForm:NgForm){
-    console.log("clicked")
     if(!itemForm.valid){
       return;
     }
@@ -62,8 +59,7 @@ export class ShoppingListEditComponent implements OnInit , OnDestroy {
 
   }
   onDelete(){
-    this._shoppinglistservice.deleteItemFromList(this.itemToBeUpdated_index);
-    // this._store.dispatch(new fromShoppingListActions.DeleteItem(this.itemToBeUpdated_index))
+    this._store.dispatch(new fromShoppingListActions.DeleteItem())
     this.itemform.reset();
     this.editMode= false;
   }

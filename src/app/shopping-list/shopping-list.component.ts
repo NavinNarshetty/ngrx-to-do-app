@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ShoppingListService } from './shopping-list.service';
 import { ShoppingListItem } from './shopping-list.module';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -14,21 +13,15 @@ import * as fromShoppingListAction from '../shopping-list/store/shopping-list.ac
 })
 export class ShoppingListComponent implements OnInit {
   public shoppingListItem:Observable<{listItems:ShoppingListItem[]}>;
-  constructor(private _shoppinglistservice:ShoppingListService , private _store:Store<appReducerState.AppState>) { }
+  constructor(private _store:Store<appReducerState.AppState>) { }
 
   ngOnInit() {
-    //  this.shoppingListItem = this._shoppinglistservice.itemfromList
     this.shoppingListItem = this._store.select('shoppingList')
-    //  this._shoppinglistservice.ItemChanged.subscribe((items:ShoppingListItem[])=>{
-    //   this.shoppingListItem = items;
-    //  });
   }
 
 
 
   onEditItem(index:number){
-    console.log(index)
-    this._shoppinglistservice.startEditing(index);
     this._store.dispatch(new fromShoppingListAction.StartEdit(index))
   }
 
