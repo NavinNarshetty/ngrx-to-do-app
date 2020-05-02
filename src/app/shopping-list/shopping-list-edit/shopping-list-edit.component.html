@@ -19,7 +19,8 @@
               <span class="help-block item-danger" *ngIf="!price.valid && price.touched">Enter a valid price</span>
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Submit </button>
+              <button type="submit" class="btn btn-primary" [disabled]="!f.valid">{{editMode ? "Update" : "Add"}} </button>
+              <button class="btn btn-danger" *ngIf="editMode" (click)="onDelete()">Delete</button>
             </div>
           </form>
     </div>
