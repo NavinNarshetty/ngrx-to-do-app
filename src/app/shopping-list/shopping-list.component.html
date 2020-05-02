@@ -18,7 +18,7 @@
             <a
               class="list-group-item"
               style="cursor: pointer"
-              *ngFor="let item of shoppingListItem; let i = index"
+              *ngFor="let item of (shoppingListItem | async).listItems; let i = index"
               (click)="onEditItem(i)"
             >
               {{ item.name }} | <span>Quantity-{{ item.quantity }}</span> | <span>Price-{{item.price }}</span>
