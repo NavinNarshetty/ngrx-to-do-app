@@ -1,0 +1,29 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+            <div class="form-group">
+              <label for="items">Item Name</label>
+              <input type="text" name="itemname"  id="name" class="form-control" required ngModel #itemname="ngModel">
+              <span class="help-block item-danger" *ngIf="!itemname.valid && itemname.touched">Enter a valid name</span>
+            </div>
+            <div class="form-group">
+              <label for="quantity">Quantity</label>
+              <input type="number" name="quantity" id="quantity" class="form-control" required ngModel #quantity="ngModel">
+              <span class="help-block item-danger" *ngIf="!quantity.valid && quantity.touched">Enter a valid quantity no</span>
+            </div>
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input type="number" name="price" id="price" class="form-control" required ngModel #price="ngModel">
+              <span class="help-block item-danger" *ngIf="!price.valid && price.touched">Enter a valid price</span>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary" [disabled]="!f.valid">{{editMode ? "Update" : "Add"}} </button>
+              <button class="btn btn-danger" *ngIf="editMode" (click)="onDelete()">Delete</button>
+            </div>
+          </form>
+    </div>
+  </div>
+
+</div>

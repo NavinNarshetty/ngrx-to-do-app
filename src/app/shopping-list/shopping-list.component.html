@@ -1,0 +1,31 @@
+
+ <div class="container">
+   <div class="row">
+     <div class="col-xs-12">
+       <div class="text-center">
+         <h3>Simple To-Do-APP</h3>
+       </div>
+     </div>
+   </div>
+ </div>
+<div>
+  <app-shopping-list-edit></app-shopping-list-edit>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-8 col-xs-offset-2">
+        <ul class="list-group">
+            <a
+              class="list-group-item"
+              style="cursor: pointer"
+              *ngFor="let item of shoppingListItem; let i = index"
+              (click)="onEditItem(i)"
+            >
+              {{ item.name }} | <span>Quantity-{{ item.quantity }}</span> | <span>Price-{{item.price }}</span>
+             </a>
+          </ul>
+    </div>
+  </div>
+</div>
+
+<!-- (click)="onEditItem(i) -->
