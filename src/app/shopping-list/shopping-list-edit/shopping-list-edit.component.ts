@@ -3,6 +3,9 @@ import { NgForm } from '@angular/forms';
 import { ShoppingListService } from '../shopping-list.service';
 import { ShoppingListItem } from '../shopping-list.module';
 import { Subscription } from 'rxjs';
+import * as appReducerState from '../../store/app.reducer'
+import { Store } from '@ngrx/store';
+import * as fromShoppingListActions from '../store/shopping-list.actions'
 
 @Component({
   selector: 'app-shopping-list-edit',
@@ -18,7 +21,7 @@ export class ShoppingListEditComponent implements OnInit , OnDestroy {
  firstSubscription:Subscription;
 
 
-  constructor(private _shoppinglistservice:ShoppingListService) { }
+  constructor(private _shoppinglistservice:ShoppingListService, private _store:Store<appReducerState.AppState>) { }
 
   ngOnInit() {
   this.firstSubscription=  this._shoppinglistservice.startEdit.subscribe((index:number)=>{
@@ -34,6 +37,7 @@ export class ShoppingListEditComponent implements OnInit , OnDestroy {
   }
 
   onSubmit(itemForm:NgForm){
+    console.log("clicked")
     if(!itemForm.valid){
       return;
     }
@@ -43,7 +47,8 @@ export class ShoppingListEditComponent implements OnInit , OnDestroy {
       this._shoppinglistservice.updateItemToList(this.itemToBeUpdated_index , newItem);
       this.editMode = false;
     }else{
-      this._shoppinglistservice.addItemsToList(newItem)
+      // this._shoppinglistservice.addItemsToList(newItem)
+      this._store.dispatch( new fromShoppingListActions.AddItem(newItem))
 
     }
     this.itemform.reset();
