@@ -2,6 +2,14 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.21.
 
+There  are 2 branches 
+
+service-to-app : to-do-app has been implemented with angular services;
+ngrx-to-app:to-do-app has been implement with ngrx store
+
+
+## Note: currently master has ngrx code merged in it
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
