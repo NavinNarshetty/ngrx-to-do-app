@@ -18,21 +18,29 @@ export class ShoppingListEditComponent implements OnInit , OnDestroy {
  }) itemform:NgForm;
  editMode:boolean = false;
  itemToBeUpdated_index:number;
+ editItem:ShoppingListItem;
  firstSubscription:Subscription;
 
 
   constructor(private _shoppinglistservice:ShoppingListService, private _store:Store<appReducerState.AppState>) { }
 
   ngOnInit() {
-  this.firstSubscription=  this._shoppinglistservice.startEdit.subscribe((index:number)=>{
-      this.editMode = true;
-      let item = this._shoppinglistservice.itemfromList[index];
-      this.itemToBeUpdated_index = index;
-      this.itemform.setValue({
-        itemname:item.name,
-        quantity:item.quantity,
-        price:item.price
-      })
+  this.firstSubscription=this._store.select('shoppingList').subscribe((stateData)=>{
+      if(stateData.editIndex > -1){
+        this.editMode = true;
+        this.itemToBeUpdated_index = stateData.editIndex;
+        this.editItem = stateData.editItem;
+        this.itemform.setValue({
+          itemname:this.editItem.name,
+          quantity:this.editItem.quantity,
+          price:this.editItem.price
+        })
+
+      }else{
+        //do somthing
+        this.editMode= false
+        // this._store.dispatch(new fromShoppingListActions.StopEdit())
+      }
     })
   }
 
@@ -44,18 +52,18 @@ export class ShoppingListEditComponent implements OnInit , OnDestroy {
     const value = itemForm.value;
     const newItem = new ShoppingListItem(value.itemname , value.quantity, value.price);
     if(this.editMode){
-      this._shoppinglistservice.updateItemToList(this.itemToBeUpdated_index , newItem);
-      this.editMode = false;
+      this._store.dispatch(new fromShoppingListActions.UpdateItem({index:this.itemToBeUpdated_index , newitem:newItem}))
     }else{
-      // this._shoppinglistservice.addItemsToList(newItem)
       this._store.dispatch( new fromShoppingListActions.AddItem(newItem))
 
     }
+    this.editMode = false;
     this.itemform.reset();
 
   }
   onDelete(){
     this._shoppinglistservice.deleteItemFromList(this.itemToBeUpdated_index);
+    // this._store.dispatch(new fromShoppingListActions.DeleteItem(this.itemToBeUpdated_index))
     this.itemform.reset();
     this.editMode= false;
   }

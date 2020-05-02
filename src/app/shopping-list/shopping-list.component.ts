@@ -4,7 +4,8 @@ import { ShoppingListItem } from './shopping-list.module';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as appReducerState from '../store/app.reducer'
+import * as appReducerState from '../store/app.reducer';
+import * as fromShoppingListAction from '../shopping-list/store/shopping-list.actions'
 
 @Component({
   selector: 'app-shopping-list',
@@ -26,7 +27,9 @@ export class ShoppingListComponent implements OnInit {
 
 
   onEditItem(index:number){
+    console.log(index)
     this._shoppinglistservice.startEditing(index);
+    this._store.dispatch(new fromShoppingListAction.StartEdit(index))
   }
 
 }
